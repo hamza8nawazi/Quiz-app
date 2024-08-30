@@ -47,6 +47,9 @@ h1 {
     display: none;
 }
 
+.next-btn{
+    display: none;
+}
 .controls {
     margin-top: 20px;
 }
