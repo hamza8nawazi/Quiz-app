@@ -39,6 +39,8 @@ function startquiz(){
     quescontainer.style.display= "inline-block"
     startbtn.style.display ="none"
     nextbtn.style.display = "inline-block"
+    restartbtn.style.display = "none"
+    currentquestion = 0 // Reset the question index to 0
     showques(currentquestion);
    
 }
@@ -53,12 +55,13 @@ function next(){
     if(currentquestion < allques.length){
         showques(currentquestion)
     }else{
+        nextbtn.style.display = "none"
         restartbtn.style.display ="inline-block"
     }
     
 }
 
 function restartquiz(){
-    
+    startquiz()
 }
 
