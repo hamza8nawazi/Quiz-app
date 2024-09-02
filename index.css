@@ -57,3 +57,7 @@ h1 {
 .start-btn, .next-btn {
     width: 100%;
 }
+
+.restart-btn{
+    display: none;
+}
