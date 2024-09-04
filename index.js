@@ -7,26 +7,31 @@ const restartbtn = document.getElementById('restart-btn')
 
 const allques =[
     {
+        id: 1,
         question:'1. How many consonants are there in the English alphabet?',
         answer: ['12','22','21','25'],
         correctans : '21'
     },
     {
+        id: 2,
         question: '2. How many days are there in a week?',
         answer:['12','5','7','8'],
         correctans: '7'
     },
     {
+        id: 3,
         question: '3. How many vowels are there in the English alphabet?',
         answer:['4','6','7','5'],
         correctans: '5'
     },
     {
+        id: 4,
         question: '4. How many hours are there in a day?',
         answer:['12','24','28','49'],
         correctans: '24'
     },
     {
+        id: 5,
         question: '5. How many seconds are there in a minute?',
         answer:['33','66','60','61'],
         correctans: '60'
@@ -45,13 +50,27 @@ function startquiz(){
    
 }
 
+
+
 function showques(i){
+    
     questionselement.innerHTML = allques[i].question
+    showans(currentquestion);
 }
 
+function showans(i){
+    answerbtnelement.innerHTML = ""
+    let buttons = '';
+    for (let j = 0; j < allques[i].answer.length; j++) {
+        buttons += `<button class="btn">${allques[i].answer[j]}</button>`;
+    }
+
+    answerbtnelement.innerHTML = buttons;
+}
 
 function next(){
     currentquestion++
+    
     if(currentquestion < allques.length){
         showques(currentquestion)
     }else{
