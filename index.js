@@ -9,32 +9,52 @@ const allques =[
     {
         id: 1,
         question:'1. How many consonants are there in the English alphabet?',
-        answer: ['12','22','21','25'],
-        correctans : '21'
+        answer: [
+            { text: "22", correct: false, id: 'a' },
+            { text: "26", correct: false, id: 'b' },
+            { text: "21", correct: true, id: 'c' },
+            { text: "20", correct: false, id: 'd' },
+          ],
     },
     {
         id: 2,
         question: '2. How many days are there in a week?',
-        answer:['12','5','7','8'],
-        correctans: '7'
+        answer:[
+            { text: "4", correct: false, id: 'a' },
+            { text: "8", correct: false, id: 'b' },
+            { text: "7", correct: true , id: 'c' },
+            { text: "9", correct: false, id: 'd' },
+          ],
     },
     {
         id: 3,
         question: '3. How many vowels are there in the English alphabet?',
-        answer:['4','6','7','5'],
-        correctans: '5'
+        answer:[
+            { text: "4", correct: false, id: 'a' },
+            { text: "6", correct: false, id: 'b' },
+            { text: "7", correct: false, id: 'c' },
+            { text: "5", correct: true, id: 'd' },
+          ],
     },
     {
         id: 4,
         question: '4. How many hours are there in a day?',
-        answer:['12','24','28','49'],
-        correctans: '24'
+        answer:[
+            { text: "26", correct: false, id: 'a' },
+            { text: "24", correct: true, id: 'b' },
+            { text: "25", correct: false, id: 'c' },
+            { text: "23", correct: false, id: 'd' },
+          ],
     },
     {
         id: 5,
         question: '5. How many seconds are there in a minute?',
-        answer:['33','66','60','61'],
-        correctans: '60'
+        answer:[
+            { text: "60", correct: true, id: 'a' },
+            { text: "66", correct: false, id: 'b' },
+            { text: "76", correct: false, id: 'c' },
+            { text: "65", correct: false, id: 'd' },
+          ],
     }
 ]
 
@@ -55,18 +75,37 @@ function startquiz(){
 function showques(i){
     
     questionselement.innerHTML = allques[i].question
-    showans(currentquestion);
+    showans(i);
 }
 
 function showans(i){
     answerbtnelement.innerHTML = ""
-    let buttons = '';
-    for (let j = 0; j < allques[i].answer.length; j++) {
-        buttons += `<button class="btn">${allques[i].answer[j]}</button>`;
-    }
 
-    answerbtnelement.innerHTML = buttons;
+    for (let j = 0; j < allques[i].answer.length; j++) {
+        const button = document.createElement('button');
+        button.classList.add('btn');
+        button.innerHTML = allques[i].answer[j].text;
+
+        // Add an event listener to check the answer when the button is clicked
+        button.addEventListener('click', function() {
+            checkAnswer(allques[i].answer[j], button);
+        });
+
+        answerbtnelement.appendChild(button);
+
+        function checkAnswer(selectedAnswer, button) {
+            if (selectedAnswer.correct) {
+                  button.style.backgroundColor = 'green'
+                  alert('correct answer')
+            } else {
+                button.style.backgroundColor = 'red'
+                alert('wrong answer, try again!')
+            }
+        }
+    
+    }
 }
+
 
 function next(){
     currentquestion++
