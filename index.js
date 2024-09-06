@@ -4,6 +4,8 @@ const quescontainer = document.getElementById('question-container')
 const questionselement = document.getElementById('question')
 const answerbtnelement = document.getElementById('answer-buttons')
 const restartbtn = document.getElementById('restart-btn')
+const correctbtn= document.querySelector('.btn')
+
 
 const allques =[
     {
@@ -86,7 +88,6 @@ function showans(i){
         button.classList.add('btn');
         button.innerHTML = allques[i].answer[j].text;
 
-        // Add an event listener to check the answer when the button is clicked
         button.addEventListener('click', function() {
             checkAnswer(allques[i].answer[j], button);
         });
@@ -94,13 +95,17 @@ function showans(i){
         answerbtnelement.appendChild(button);
 
         function checkAnswer(selectedAnswer, button) {
+           
             if (selectedAnswer.correct) {
-                  button.style.backgroundColor = 'green'
-                  alert('correct answer')
-            } else {
-                button.style.backgroundColor = 'red'
-                alert('wrong answer, try again!')
-            }
+                button.style.backgroundColor = 'green'
+                alert('correct answer')
+              
+                
+          } else {
+            //   button.style.backgroundColor = 'red'
+              alert('wrong answer, try again!')
+              
+          }
         }
     
     }
@@ -112,6 +117,8 @@ function next(){
     
     if(currentquestion < allques.length){
         showques(currentquestion)
+
+    
     }else{
         nextbtn.style.display = "none"
         restartbtn.style.display ="inline-block"
@@ -122,4 +129,5 @@ function next(){
 function restartquiz(){
     startquiz()
 }
+
 
