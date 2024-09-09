@@ -99,11 +99,13 @@ function showans(i){
             if (selectedAnswer.correct) {
                 button.style.backgroundColor = 'green'
                 alert('correct answer')
+                button.disabled = true
               
                 
           } else {
-            //   button.style.backgroundColor = 'red'
+              button.style.backgroundColor = 'red'
               alert('wrong answer, try again!')
+              showans(i);
               
           }
         }
