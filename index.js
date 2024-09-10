@@ -7,20 +7,42 @@ const restartbtn = document.getElementById('restart-btn')
 const correctbtn= document.querySelector('.btn')
 const resultcontainer = document.getElementById('result-container')
 const resulttext = document.getElementById('result-text')
+const timerDisplay = document.getElementById('timer');
 
 let currentquestion = 0
 let score = 0
+let totalTime = 60; 
+let timerInterval;
 
 function startquiz(){
     score = 0;
+    totalTime = 60;
     quescontainer.style.display= "inline-block"
     startbtn.style.display ="none"
     nextbtn.style.display = "inline-block"
     restartbtn.style.display = "none"
-     resulttext.style.display = "none"
+    resulttext.style.display = "none"
     currentquestion = 0 // Reset the question index to 0
     showques(currentquestion);
+    startTimer();
    
+}
+
+function startTimer() {
+    timerDisplay.style.display = 'inline-block'; // Show timer
+    timerDisplay.innerHTML = `Time left: ${Math.floor(totalTime / 60)}:${totalTime % 60}`;
+    
+    timerInterval = setInterval(function() {
+        totalTime--;
+        let minutes = Math.floor(totalTime / 60);
+        let seconds = totalTime % 60;
+        timerDisplay.innerHTML = `Time left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        
+        if (totalTime <= 0) {
+            clearInterval(timerInterval);
+            showResult();
+        }
+    }, 1000); 
 }
 
 
@@ -75,6 +97,7 @@ function next(){
 
     
     }else{
+        clearInterval(timerInterval);
         nextbtn.style.display = "none"
         restartbtn.style.display ="inline-block"
         showResult();
@@ -82,6 +105,7 @@ function next(){
     
 }
 function showResult() {
+    clearInterval(timerInterval);
     quescontainer.classList.add('hide') 
     nextbtn.classList.add('hide') 
     restartbtn.classList.remove('hide') 
@@ -89,10 +113,12 @@ function showResult() {
     resulttext.style.display = "inline-block"
     resulttext.innerHTML = `Quiz Over! Your score is ${score} out of ${allques.length}`
     quescontainer.style.display = "none"
+    timerDisplay.style.display = 'none';
     
 }
 
 function restartquiz(){
+    clearInterval(timerInterval);
     startquiz()
 }
 
