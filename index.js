@@ -25,6 +25,11 @@ function startquiz(){
     currentquestion = 0 // Reset the question index to 0
     showques(currentquestion);
     startTimer();
+
+    const timerElement = document.getElementById('timer');
+    timerElement.classList.remove('animate'); // Reset animation
+    void timerElement.offsetWidth; // Trigger reflow to restart animation
+    timerElement.classList.add('animate'); // Start the animation again
    
 }
 
@@ -41,7 +46,14 @@ function startTimer() {
         if (totalTime <= 0) {
             clearInterval(timerInterval);
             showResult();
+            nextbtn.style.display = "none";
+            restartbtn.style.display = "inline-block"
+
+
+             
+            
         }
+        
     }, 1000); 
 }
 
