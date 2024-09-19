@@ -33,21 +33,21 @@ function startTimer() {
     const timerText = document.getElementById('timer-text');
     const circle = document.getElementById('circle');
 
-    timerText.innerHTML = timeLeft; // Initial time
+    timerText.innerHTML = timeLeft;
 
     timerInterval = setInterval(function() {
         timeLeft--;
         timerText.innerHTML = timeLeft;
 
-        // Calculate the degree for the progress bar (360 degrees total)
+        
         let progressDegree = (timeLeft / totalTime) * 360;
         circle.style.background = `conic-gradient(green ${progressDegree}deg, lightgray 0deg)`;
 
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
             timerText.innerHTML = 'Time\'s up!';
-            nextbtn.classList.add('hide'); // Hide the next button when time is up
-            restartbtn.classList.remove('hide'); // Show restart button
+            nextbtn.classList.add('hide'); 
+            restartbtn.classList.remove('hide'); 
             showResult();
         }
     }, 1000); // Update every second
