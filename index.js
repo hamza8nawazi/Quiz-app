@@ -1,72 +1,65 @@
-const startbtn = document.getElementById('start-btn')
-const nextbtn = document.getElementById('next-btn')
-const quescontainer = document.getElementById('question-container')
-const questionselement = document.getElementById('question')
-const answerbtnelement = document.getElementById('answer-buttons')
-const restartbtn = document.getElementById('restart-btn')
-const correctbtn= document.querySelector('.btn')
-const resultcontainer = document.getElementById('result-container')
-const resulttext = document.getElementById('result-text')
-const timerDisplay = document.getElementById('timer');
+const startbtn = document.getElementById('start-btn');
+const nextbtn = document.getElementById('next-btn');
+const quescontainer = document.getElementById('question-container');
+const questionselement = document.getElementById('question');
+const answerbtnelement = document.getElementById('answer-buttons');
+const restartbtn = document.getElementById('restart-btn');
+const resultcontainer = document.getElementById('result-container');
+const resulttext = document.getElementById('result-text');
+const timercontainer=document.getElementById('timer-container');
 
-let currentquestion = 0
-let score = 0
-let totalTime = 60; 
+
+let currentquestion = 0;
+let score = 0;
+let totalTime = 60;
+let timeLeft = totalTime;
 let timerInterval;
 
-function startquiz(){
+function startquiz() {
     score = 0;
-    totalTime = 60;
-    quescontainer.style.display= "inline-block"
-    startbtn.style.display ="none"
-    nextbtn.style.display = "inline-block"
-    restartbtn.style.display = "none"
-    resulttext.style.display = "none"
-    currentquestion = 0 // Reset the question index to 0
+    timeLeft = totalTime;
+    timercontainer.style.display='inline-block'
+    quescontainer.classList.remove('hide');
+    startbtn.classList.add('hide');
+    nextbtn.classList.add('hide');
+    restartbtn.classList.add('hide');
+    resulttext.classList.add('hide');
+    currentquestion = 0; // Reset the question index to 0
     showques(currentquestion);
     startTimer();
-
-    const timerElement = document.getElementById('timer');
-    timerElement.classList.remove('animate'); // Reset animation
-    void timerElement.offsetWidth; // Trigger reflow to restart animation
-    timerElement.classList.add('animate'); // Start the animation again
-   
 }
 
 function startTimer() {
-    timerDisplay.style.display = 'inline-block'; // Show timer
-    timerDisplay.innerHTML = `Time left: ${Math.floor(totalTime / 60)}:${totalTime % 60}`;
-    
+    const timerText = document.getElementById('timer-text');
+    const circle = document.getElementById('circle');
+
+    timerText.innerHTML = timeLeft; // Initial time
+
     timerInterval = setInterval(function() {
-        totalTime--;
-        let minutes = Math.floor(totalTime / 60);
-        let seconds = totalTime % 60;
-        timerDisplay.innerHTML = `Time left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        
-        if (totalTime <= 0) {
+        timeLeft--;
+        timerText.innerHTML = timeLeft;
+
+        // Calculate the degree for the progress bar (360 degrees total)
+        let progressDegree = (timeLeft / totalTime) * 360;
+        circle.style.background = `conic-gradient(green ${progressDegree}deg, lightgray 0deg)`;
+
+        if (timeLeft <= 0) {
             clearInterval(timerInterval);
+            timerText.innerHTML = 'Time\'s up!';
+            nextbtn.classList.add('hide'); // Hide the next button when time is up
+            restartbtn.classList.remove('hide'); // Show restart button
             showResult();
-            nextbtn.style.display = "none";
-            restartbtn.style.display = "inline-block"
-
-
-             
-            
         }
-        
-    }, 1000); 
+    }, 1000); // Update every second
 }
 
-
-
-function showques(i){
-    
-    questionselement.innerHTML = allques[i].question
+function showques(i) {
+    questionselement.innerHTML = allques[i].question;
     showans(i);
 }
 
-function showans(i){
-    answerbtnelement.innerHTML = ""
+function showans(i) {
+    answerbtnelement.innerHTML = "";
 
     for (let j = 0; j < allques[i].answer.length; j++) {
         const button = document.createElement('button');
@@ -78,60 +71,47 @@ function showans(i){
         });
 
         answerbtnelement.appendChild(button);
-
-        function checkAnswer(selectedAnswer, button) {
-        
-            if (selectedAnswer.correct) {
-                score++ ;
-                button.style.backgroundColor = 'green'       
-
-          } else {
-              button.style.backgroundColor = 'red'
-              
-          }
-          document.querySelectorAll('.btn').forEach(btn => btn.disabled = true)
-          nextbtn.disabled = false
-          restartbtn.disabled = false
-        }
-
-    
-    
     }
 }
 
+function checkAnswer(selectedAnswer, button) {
+    if (selectedAnswer.correct) {
+        score++;
+        button.style.backgroundColor = 'green';
+    } else {
+        button.style.backgroundColor = 'red';
+    }
 
-function next(){
-    
-    currentquestion++
-    
-    if(currentquestion < allques.length){
-        showques(currentquestion)
+    document.querySelectorAll('.btn').forEach(btn => btn.disabled = true);
+    nextbtn.disabled = false;
+    restartbtn.disabled = false;
+    nextbtn.classList.remove('hide');
+}
 
-    
-    }else{
+function next() {
+    currentquestion++;
+
+    if (currentquestion < allques.length) {
+        showques(currentquestion);
+    } else {
         clearInterval(timerInterval);
-        nextbtn.style.display = "none"
-        restartbtn.style.display ="inline-block"
+        nextbtn.classList.add('hide');
+        restartbtn.classList.remove('hide');
         showResult();
     }
-    
 }
+
 function showResult() {
-    clearInterval(timerInterval);
-    quescontainer.classList.add('hide') 
-    nextbtn.classList.add('hide') 
-    restartbtn.classList.remove('hide') 
-    resultcontainer.style.display = "inline-block" // Show the result container
-    resulttext.style.display = "inline-block"
-    resulttext.innerHTML = `Quiz Over! Your score is ${score} out of ${allques.length}`
-    quescontainer.style.display = "none"
-    timerDisplay.style.display = 'none';
-    
+    quescontainer.classList.add('hide');
+    nextbtn.classList.add('hide');
+    restartbtn.classList.remove('hide');
+    resultcontainer.classList.remove('hide');
+    resulttext.classList.remove('hide');
+    resulttext.innerHTML = `Quiz Over! Your score is ${score} out of ${allques.length}`;
 }
 
-function restartquiz(){
+function restartquiz() {
     clearInterval(timerInterval);
-    startquiz()
+    startquiz();
 }
-
 
