@@ -24,6 +24,8 @@ function startquiz() {
     nextbtn.classList.add('hide');
     restartbtn.classList.add('hide');
     resulttext.classList.add('hide');
+    nextbtn.style.display = 'inline-block'
+    restartbtn.style.display = 'none'
     currentquestion = 0; // Reset the question index to 0
     showques(currentquestion);
     startTimer();
@@ -105,6 +107,8 @@ function showResult() {
     quescontainer.classList.add('hide');
     nextbtn.classList.add('hide');
     restartbtn.classList.remove('hide');
+    restartbtn.style.display = 'inline-block'
+    nextbtn.style.display = 'none'
     resultcontainer.classList.remove('hide');
     resulttext.classList.remove('hide');
     resulttext.innerHTML = `Quiz Over! Your score is ${score} out of ${allques.length}`;
