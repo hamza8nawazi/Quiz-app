@@ -7,6 +7,7 @@ const restartbtn = document.getElementById('restart-btn');
 const resultcontainer = document.getElementById('result-container');
 const resulttext = document.getElementById('result-text');
 const timercontainer=document.getElementById('timer-container');
+const questionNumberElement = document.getElementById('question-number');
 
 
 let currentquestion = 0;
@@ -56,6 +57,7 @@ function startTimer() {
 }
 
 function showques(i) {
+    questionNumberElement.innerHTML = `Question ${i + 1} / ${allques.length}`;
     questionselement.innerHTML = allques[i].question;
     showans(i);
 }
@@ -81,6 +83,8 @@ function checkAnswer(selectedAnswer, button) {
         score++;
         button.style.backgroundColor = 'green';
     } else {
+        const sound = new Audio('./wrong.mp3');
+        sound.play();
         button.style.backgroundColor = 'red';
     }
 
@@ -118,4 +122,3 @@ function restartquiz() {
     clearInterval(timerInterval);
     startquiz();
 }
-
