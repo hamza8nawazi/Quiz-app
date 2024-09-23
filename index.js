@@ -44,7 +44,7 @@ function startTimer() {
 
         
         let progressDegree = (timeLeft / totalTime) * 360;
-        circle.style.background = `conic-gradient(green ${progressDegree}deg, lightgray 0deg)`;
+        circle.style.background = `conic-gradient(lightblue ${progressDegree}deg, white 0deg)`;
 
         if (timeLeft <= 0) {
             clearInterval(timerInterval);
@@ -81,6 +81,8 @@ function showans(i) {
 function checkAnswer(selectedAnswer, button) {
     if (selectedAnswer.correct) {
         score++;
+        const sound = new Audio('./rightanswer-95219.mp3');
+        sound.play();
         button.style.backgroundColor = 'green';
     } else {
         const sound = new Audio('./wrong.mp3');
@@ -116,6 +118,7 @@ function showResult() {
     resultcontainer.classList.remove('hide');
     resulttext.classList.remove('hide');
     resulttext.innerHTML = `Quiz Over! Your score is ${score} out of ${allques.length}`;
+    timercontainer.style.display= 'none'
 }
 
 function restartquiz() {

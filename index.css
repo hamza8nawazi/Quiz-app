@@ -1,21 +1,32 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #aa7fdb;
+    background-color: #eceaea;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
 }
-
 .quiz-container {
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     width: 300px;
     text-align: center;
+    position: relative; /* Make the container the reference for absolute positioning */
+
+
+
 }
+.question-number{
+    display: flex;
+    padding-bottom: 5%;
+
+}
+
+
+
 
 h1 {
     margin-bottom: 20px;
@@ -64,27 +75,30 @@ h1 {
 
 
 #timer-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
     display: none;
-  }
-  
-  #circle {
-    width: 120px;
-    height: 120px;
+}
+
+#circle {
+    width: 60px; 
+    height: 60px;
     border-radius: 50%;
-    background: conic-gradient(green 360deg, lightgray 0deg);
+    border: solid 2px;
+    background: conic-gradient(rgb(64, 198, 231) 360deg, lightgray 0deg);
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-  }
-  
-  #timer-text {
+}
+
+#timer-text {
     position: absolute;
-    font-size: 24px;
+    font-size: 16px; 
     font-weight: bold;
     color: black;
-  }
+}
